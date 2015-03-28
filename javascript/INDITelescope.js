@@ -49,7 +49,7 @@ function mainDialog()
 
    var ttStr = "";
 
-    // BEGIN of INDI Client Process  ========================================================
+    // BEGIN of INDI Client Process  =========================================================
 
 
    this.INDIClientProcess_Section       = new SectionBar(this,"INDI Client Process");
