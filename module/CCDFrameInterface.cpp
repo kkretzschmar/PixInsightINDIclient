@@ -737,7 +737,7 @@ void CCDFrameInterface::CancelButton_Click(Button& sender, bool checked){
 			// TODO enable abort
 			if (serverSendsImage){
 				pInstance->setImageDownloadedFlag(false);
-				while (!pInstance->getImageDownloadedFlag() && !pInstance->getInternalAbortFlag()){Sleep(1);ProcessEvents();}
+				while (!pInstance->getImageDownloadedFlag() && !pInstance->getInternalAbortFlag()){;ProcessEvents();}
 				pInstance->setImageDownloadedFlag(false);
 			} else {
 				INDIPropertyListItem ccdExposure;
@@ -745,15 +745,12 @@ void CCDFrameInterface::CancelButton_Click(Button& sender, bool checked){
 				// timimg problem: wait until server sends  BUSY
 				do {
 					pInstance->getINDIPropertyItem(m_Device,"CCD_EXPOSURE","CCD_EXPOSURE_VALUE",ccdExposure);
-					Sleep(1);
 					ProcessEvents();
 					serverExposureIsBusy = ccdExposure.PropertyState==IPS_BUSY ;
 				} while (!serverExposureIsBusy && (GUI->ExpDur_Edit.Text().ToFloat() < pcl_timeout) && !pInstance->getInternalAbortFlag());
 
 				do {
-
 					pInstance->getINDIPropertyItem(m_Device,"CCD_EXPOSURE","CCD_EXPOSURE_VALUE",ccdExposure);
-					Sleep(1);
 					ProcessEvents();
 				} while((ccdExposure.PropertyState==IPS_BUSY)&& !pInstance->getInternalAbortFlag());
 			}
