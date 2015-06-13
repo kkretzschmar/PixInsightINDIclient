@@ -737,7 +737,7 @@ void CCDFrameInterface::CancelButton_Click(Button& sender, bool checked){
 			// TODO enable abort
 			if (serverSendsImage){
 				pInstance->setImageDownloadedFlag(false);
-				while (!pInstance->getImageDownloadedFlag() && !pInstance->getInternalAbortFlag()){;ProcessEvents();}
+				while (!pInstance->getImageDownloadedFlag() && !pInstance->getInternalAbortFlag()){ProcessEvents();}
 				pInstance->setImageDownloadedFlag(false);
 			} else {
 				INDIPropertyListItem ccdExposure;
