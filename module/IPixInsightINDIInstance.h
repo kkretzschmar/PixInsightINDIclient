@@ -4,7 +4,7 @@
  *  Created on: May 26, 2014
  *      Author: klaus
  */
-
+// Copyright (c) 2013-2015, Klaus Kretzschmar. All Rights Reserved.
 #ifndef IPIXINSIGHTINDIINSTANCE_H_
 #define IPIXINSIGHTINDIINSTANCE_H_
 

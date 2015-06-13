@@ -4,6 +4,7 @@
  *  Created on: May 29, 2014
  *      Author: klaus
  */
+// Copyright (c) 2013-2015, Klaus Kretzschmar. All Rights Reserved.
 
 #ifndef IINDIPROPERTY_H_
 #define IINDIPROPERTY_H_

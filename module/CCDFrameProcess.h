@@ -6,6 +6,7 @@
 // ****************************************************************************
 // This file is part of the standard PixInsightINDI PixInsight module.
 //
+// Copyright (c) 2013-2015, Klaus Kretzschmar. All Rights Reserved.
 // Copyright (c) 2003-2013, Pleiades Astrophoto S.L. All Rights Reserved.
 //
 // Redistribution and use in both source and binary forms, with or without

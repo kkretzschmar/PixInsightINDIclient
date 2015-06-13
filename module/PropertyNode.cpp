@@ -1,3 +1,4 @@
+// Copyright (c) 2013-2015, Klaus Kretzschmar. All Rights Reserved.
 #include "PropertyNode.h"
 #include <assert.h>
 #include <algorithm>
