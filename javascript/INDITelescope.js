@@ -344,7 +344,7 @@ function mainDialog()
    this.Unpark_Button.text = "Unpark";
    this.Unpark_Button.toolTip = "<p>Unpark telescope.</p>";
    this.Unpark_Button.onPress = function (){
-     var propertyArray=[["/" + currentTelescope + "/TELESCOPE_PARK/PARK","INDI_SWITCH","ON"]]
+     var propertyArray=[["/" + currentTelescope + "/TELESCOPE_PARK/UNPARK","INDI_SWITCH","ON"]]
      periodicTimer.stop();
      indi.sendNewPropertyArray(propertyArray);
      //periodicTimer.start();
