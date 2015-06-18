@@ -6,6 +6,7 @@
 // ****************************************************************************
 // This file is part of the standard PixInsightINDI PixInsight module.
 //
+// Copyright (c) 2013-2015, Klaus Kretzschmar. All Rights Reserved.
 // Copyright (c) 2003-2013, Pleiades Astrophoto S.L. All Rights Reserved.
 //
 // Redistribution and use in both source and binary forms, with or without
@@ -46,31 +47,29 @@
 // POSSIBILITY OF SUCH DAMAGE.
 // ****************************************************************************
 
-#ifndef __PixInsightINDIInstance_h
-#define __PixInsightINDIInstance_h
+#ifndef ____INDIMountInstance_h
+#define ____INDIMountInstance_h
 
 #include <pcl/MetaParameter.h> // for pcl_bool, pcl_enum
 #include <pcl/ProcessImplementation.h>
 #include <pcl/Timer.h>
 #include <pcl/Console.h>
-#include "PixInsightINDIParameters.h"
-#include "IPixInsightINDIInstance.h"
+
+
 
 namespace pcl
 {
 
 // ----------------------------------------------------------------------------
 
-class PixInsightINDIInstance : public ProcessImplementation, IPixInsightINDIInstance
+
+
+class INDIMountInstance : public ProcessImplementation
 {
 public:
-
-   typedef Array<INDIDeviceListItem>      DeviceListType;
-   typedef Array<INDIPropertyListItem>    PropertyListType;
-   typedef Array<INDINewPropertyListItem> NewPropertyListType;
  
-   PixInsightINDIInstance( const MetaProcess* );
-   PixInsightINDIInstance( const PixInsightINDIInstance& );
+   INDIMountInstance( const MetaProcess* );
+   INDIMountInstance( const INDIMountInstance& );
   
    virtual void Assign( const ProcessImplementation& );
 
@@ -79,55 +78,11 @@ public:
 
    virtual bool ExecuteGlobal();
 
-   virtual void* LockParameter( const MetaParameter*, size_type tableRow );
-
-   virtual bool AllocateParameter( size_type sizeOrLength, const MetaParameter* p, size_type tableRow );
-   virtual size_type ParameterLength( const MetaParameter* p, size_type tableRow ) const;
    	
-	virtual Array<INDIPropertyListItem>& getPropertyList() {return p_propertyList;}
-	virtual Array<INDIDeviceListItem>& getDeviceList(){return p_deviceList; }
-	virtual IsoString& getCurrentMessage() {return p_currentMessage;}
-
-   bool sendNewPropertyValue(const INDINewPropertyListItem& propItem,bool isAsynch=false);
-
-   bool getINDIPropertyItem(String device, String property, String element, INDIPropertyListItem& result );
-   bool getINDIActiveSwitchPropertyItem(String device, String property,  INDIPropertyListItem& result );
-
-   void doInternalAbort() {m_internalAbortFlag=true;}
-   bool getInternalAbortFlag() {return m_internalAbortFlag;}
-   void setInternalAbortFlag(bool doAbort) {m_internalAbortFlag=doAbort;}
-   void clearNewPropertyList(){p_newPropertyList.Clear();}
-   virtual bool getImageDownloadedFlag(){return m_ImageDownloaded;}
-   virtual void setImageDownloadedFlag(bool flag){m_ImageDownloaded=flag;}
+   
 private:
-   DeviceListType          p_deviceList;
-   PropertyListType        p_propertyList;
-   NewPropertyListType     p_newPropertyList;
-   String	               p_host;       // String hostname of INDI server
-   uint32                  p_port;	     // uint32 port of INDI server
-   uint32                  p_connect;	 // uint32 port of INDI server
-   IsoString               p_currentMessage;
-   String                  p_command;
-   String                  p_getPropertyReturnValue;
-   String                  p_getPropertyParam;
-   pcl_bool				   p_doAbort;
    
-   bool                    m_internalAbortFlag;
-   bool                    m_ImageDownloaded;
-
-   void getProperties();
-   bool sendNewProperty(bool isAsyncCall=false);
-   bool getPropertyFromKeyString(INDINewPropertyListItem& newPropertyKey, const String& keyString);
-   void writeCurrentMessageToConsole(); 
-
-   friend class INDIClient;
    
-
-   friend class PixInsightINDIEngine;
-   friend class PixInsightINDIProcess;
-   friend class PixInsightINDIInterface;
-   friend class CCDFrameInterface;  
-   friend class INDIMountInterface;
 };
 
 // ----------------------------------------------------------------------------
@@ -135,7 +90,7 @@ private:
 
 } // pcl
 
-#endif   // __PixInsightINDIInstance_h
+#endif   // __INDIMountInstance_h
 
 // ****************************************************************************
-// EOF PixInsightINDIInstance.h - Released 2013/03/24 18:42:27 UTC
+// EOF __INDIMountInstance.h - Released 2013/03/24 18:42:27 UTC

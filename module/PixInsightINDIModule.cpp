@@ -61,6 +61,8 @@
 #include "PixInsightINDIInterface.h"
 #include "CCDFrameProcess.h"
 #include "CCDFrameInterface.h"
+#include "INDIMountProcess.h"
+#include "INDIMountInterface.h"
 
 namespace pcl
 {
@@ -87,27 +89,27 @@ IsoString PixInsightINDIModule::Name() const
 
 String PixInsightINDIModule::Description() const
 {
-   return "PixInsight PixInsightINDI Process Module"; // Replace with your own description
+   return "PixInsightINDI Process Module"; // Replace with your own description
 }
 
 String PixInsightINDIModule::Company() const
 {
-   return "Your company comes here";
+   return "";
 }
 
 String PixInsightINDIModule::Author() const
 {
-   return "Your name comes here";
+   return "Klaus Kretzschmar";
 }
 
 String PixInsightINDIModule::Copyright() const
 {
-   return "Copyright (c) the year you wrote this, your name";
+   return "Copyright (c) 2013, Klaus Kretzschmar";
 }
 
 String PixInsightINDIModule::TradeMarks() const
 {
-   return "Your trade marks come here";
+   return "";
 }
 
 String PixInsightINDIModule::OriginalFileName() const
@@ -169,6 +171,8 @@ PCL_MODULE_EXPORT int InstallPixInsightModule( int mode )
 	  new pcl::PixInsightINDIInterface;
 	  new pcl::CCDFrameProcess;
 	  new pcl::CCDFrameInterface;
+	  new pcl::INDIMountProcess;
+	  new pcl::INDIMountInterface;
    }
 
    /*

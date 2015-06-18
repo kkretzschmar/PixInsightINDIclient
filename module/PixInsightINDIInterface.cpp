@@ -696,7 +696,8 @@ void EditNumberCoordPropertyDialog::EditCompleted( Edit& sender )
 		m_minute=Minute_Edit.Text().ToDouble();
 		m_second=sender.Text().ToDouble();
 	}
-	double coord=m_hour + m_minute / 60 + m_second / 3600;
+	double sign=m_hour >=0 ? 1.0 : -1.0;
+	double coord=sign * (fabs(m_hour) + m_minute / 60 + m_second / 3600);
 	m_newPropertyListItem.NewPropertyValue=String(coord) ;
 }
 

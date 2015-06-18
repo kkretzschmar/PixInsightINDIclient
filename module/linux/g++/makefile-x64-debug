@@ -23,6 +23,9 @@ SRC_FILES= \
 ../../CCDFrameInstance.cpp \
 ../../CCDFrameInterface.cpp \
 ../../CCDFrameProcess.cpp \
+../../INDIMountInstance.cpp \
+../../INDIMountInterface.cpp \
+../../INDIMountProcess.cpp \
 ../../IINDIProperty.cpp \
 ../../INDIPropertyBuilder.cpp \
 ../../PixInsightINDIInstance.cpp \
@@ -47,6 +50,9 @@ OBJ_FILES= \
 ./x64/Debug/CCDFrameInstance.o \
 ./x64/Debug/CCDFrameInterface.o \
 ./x64/Debug/CCDFrameProcess.o \
+./x64/Debug/INDIMountInstance.o \
+./x64/Debug/INDIMountInterface.o \
+./x64/Debug/INDIMountProcess.o \
 ./x64/Debug/IINDIProperty.o \
 ./x64/Debug/INDIPropertyBuilder.o \
 ./x64/Debug/PixInsightINDIInstance.o \
@@ -71,6 +77,9 @@ DEP_FILES= \
 ./x64/Debug/CCDFrameInstance.d \
 ./x64/Debug/CCDFrameInterface.d \
 ./x64/Debug/CCDFrameProcess.d \
+./x64/Debug/INDIMountInstance.d \
+./x64/Debug/INDIMountInterface.d \
+./x64/Debug/INDIMountProcess.d \
 ./x64/Debug/IINDIProperty.d \
 ./x64/Debug/INDIPropertyBuilder.d \
 ./x64/Debug/PixInsightINDIInstance.d \
