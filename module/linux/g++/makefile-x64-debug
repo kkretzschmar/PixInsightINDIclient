@@ -39,7 +39,8 @@ SRC_FILES= \
 ../../basedevice.cpp \
 ../../indicom.c \
 ../../indiproperty.cpp \
-../../lilxml.c
+../../lilxml.c \
+../../SkyMap.cpp
 
 #
 # Object files
@@ -66,7 +67,8 @@ OBJ_FILES= \
 ./x64/Debug/basedevice.o \
 ./x64/Debug/indicom.o \
 ./x64/Debug/indiproperty.o \
-./x64/Debug/lilxml.o
+./x64/Debug/lilxml.o \
+./x64/Debug/SkyMap.o
 
 #
 # Dependency files
@@ -93,7 +95,8 @@ DEP_FILES= \
 ./x64/Debug/basedevice.d \
 ./x64/Debug/indicom.d \
 ./x64/Debug/indiproperty.d \
-./x64/Debug/lilxml.d
+./x64/Debug/lilxml.d \
+./x64/Debug/SkyMap.d
 
 #
 # Rules

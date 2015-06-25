@@ -89,8 +89,9 @@ public:
 	virtual IsoString& getCurrentMessage() {return p_currentMessage;}
 
    bool sendNewPropertyValue(const INDINewPropertyListItem& propItem,bool isAsynch=false);
+   bool sendNewPropertyVector(const NewPropertyListType& propVector,bool isAsynch=false);
 
-   bool getINDIPropertyItem(String device, String property, String element, INDIPropertyListItem& result );
+   bool getINDIPropertyItem(String device, String property, String element, INDIPropertyListItem& result, bool formatted=true );
    bool getINDIActiveSwitchPropertyItem(String device, String property,  INDIPropertyListItem& result );
 
    void doInternalAbort() {m_internalAbortFlag=true;}

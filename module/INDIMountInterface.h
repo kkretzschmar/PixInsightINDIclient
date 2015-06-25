@@ -61,6 +61,7 @@
 #include <pcl/SectionBar.h>
 #include <pcl/SpinBox.h>
 #include <pcl/PushButton.h>
+#include <pcl/RadioButton.h>
 #include <pcl/TreeBox.h>
 #include <pcl/ErrorHandler.h>
 #include <pcl/Timer.h>
@@ -69,6 +70,7 @@
 
 #include "PixInsightINDIclient.h"
 #include "INDIMountInstance.h"
+
 
 #if defined(__PCL_LINUX)
 #include <memory>
@@ -84,17 +86,8 @@ namespace pcl
 
 // ----------------------------------------------------------------------------
 
-class CoordUtils {
-public:
-	typedef struct {
-		double   hour;
-		double   minute;
-		double   second;
-	} coord_HMS;
 
-	static coord_HMS convertToHMS(double coord);
-	static double convertFromHMS(const coord_HMS& coord);
-};
+class SkyMap;
 
 class EditEqCoordPropertyDialog : public Dialog {
 private:
@@ -129,7 +122,7 @@ private:
 	String m_DEC_TargetCoord;
 
 public:
-	EditEqCoordPropertyDialog();
+	EditEqCoordPropertyDialog(IsoString raCoord, IsoString decCoord);
 	virtual ~EditEqCoordPropertyDialog(){}
 
 	virtual void setRACoords(String value);
@@ -228,6 +221,14 @@ public:
 		HorizontalSizer		MountDevice_Sizer;
 		 Label				 MountDevice_Label;
 		 ComboBox            MountDevice_Combo;
+	   SectionBar         SkyChart_SectionBar;
+	   Control            SkyChart_Control;
+	   VerticalSizer      SkyChart_VSizer;
+	    HorizontalSizer		SkyChart_HSizer;
+	     Control             SkyChart_GraphicsControl;
+	    HorizontalSizer     SkyChart_View_HSizer;
+	      GUI_LABELED_CONTROL(AllSky,RadioButton);
+	      GUI_LABELED_CONTROL(FoV,RadioButton);
 	   SectionBar         MountCoordAndTime_SectionBar;
 	   Control			  MountCoordAndTime_Control;
 	    HorizontalSizer		MountCoordAndTime_HSizer;
@@ -256,11 +257,11 @@ public:
 	      Label                MountGoto_Label;
 	      GUI_LABELED_CONTROL(TRA,Edit);
 	      GUI_LABELED_CONTROL(TDEC,Edit);
-	      VerticalSizer        MountPushButton_VSizer;
-	       PushButton		    MountSet_PushButton;
-	       PushButton		    MountSearch_PushButton;
+	      PushButton		    MountSet_PushButton;
+	      PushButton		    MountSearch_PushButton;
 	     HorizontalSizer	  MountGoto_Second_HSizer;
 	      PushButton		   MountGoto_PushButton;
+	      PushButton		   MountSynch_PushButton;
    };
 
    private:
@@ -275,14 +276,28 @@ public:
    String                  m_Device;
    String                  m_TargetRA;
    String                  m_TargetDEC;
+   IsoString               m_downloadedFile;
+   SkyMap*                 m_skymap;
+
+
+   double                  m_geoLat;
+   double                  m_lst;
+   double				   m_scopeRA;
+   double				   m_scopeDEC;
+   double				   m_alignedRA;
+   double			       m_alignedDEC;
+   double                  m_limitStarMag;
+   bool                    m_isAllSkyView;
    
    void UpdateDeviceList_Timer( Timer& sender );
    void UpdateMount_Timer( Timer &sender );
    void EditCompleted( Edit& sender );
    void ComboItemSelected(ComboBox& sender, int itemIndex);
    void Button_Click(Button& sender, bool checked);
-
+   void RadioButtonChecked( RadioButton& sender );
+   void SkyChart_Paint( Control& sender, const Rect& updateRect );
    void UpdateDeviceList();
+   void DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size);
 };
 
 // ----------------------------------------------------------------------------
