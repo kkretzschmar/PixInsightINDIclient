@@ -38,6 +38,9 @@ namespace pcl {
 			propertyListItem.PropertyValue=INDIProperty->getElementValue(i);
 			propertyListItem.PropertyFlag=flag;
 			propertyListItem.PropertyNumberFormat=INDIProperty->getNumberFormat(i);
+			propertyListItem.numberMin=INDIProperty->getNumberMinValue(i);
+			propertyListItem.numberMax=INDIProperty->getNumberMaxValue(i);
+			propertyListItem.numberStep=INDIProperty->getNumberStep(i);
 			propertyListItem.ElementLabel=INDIProperty->getElementLabel(i);
 			arrayOp->run(m_Instance->getPropertyList(),propertyListItem);
 		    if (m_ScriptInstance) {

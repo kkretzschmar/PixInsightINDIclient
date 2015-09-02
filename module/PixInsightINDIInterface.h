@@ -159,11 +159,9 @@ private:
 	VerticalSizer       Global_Sizer;
 		HorizontalSizer		Property_Sizer;
 			Label               Property_Label;
-			Edit				Hour_Edit;
-			Label               Colon1_Label;
-			Edit				Minute_Edit;
-			Label               Colon2_Label;
-			Edit				Second_Edit;
+		    NumericEdit         Hour_Edit;
+			NumericEdit  		Minute_Edit;
+			NumericEdit			Second_Edit;
 		HorizontalSizer	Buttons_Sizer;
 			PushButton			OK_PushButton;
 			PushButton			Cancel_PushButton;
@@ -175,12 +173,31 @@ private:
 
 
 public:
-	EditNumberCoordPropertyDialog(PixInsightINDIInstance* indiInstance );
+	EditNumberCoordPropertyDialog(PixInsightINDIInstance* indiInstance,const IsoString& numberFmt, double min, double max, double step);
 	virtual ~EditNumberCoordPropertyDialog(){}
 
 	virtual void setPropertyLabelString(String label){Property_Label.SetText(label);}
 	virtual void setPropertyValueString(String value);
-	void EditCompleted( Edit& sender);
+	void NumericEditCompleted( NumericEdit& sender, double value);
+};
+
+class EditNumberPropertyDialog : public SetPropertyDialog {
+private:
+	VerticalSizer       Global_Sizer;
+		HorizontalSizer		Property_Sizer;
+			Label               Property_Label;
+		    NumericEdit         Number_Edit;
+		HorizontalSizer	Buttons_Sizer;
+			PushButton			OK_PushButton;
+			PushButton			Cancel_PushButton;
+
+public:
+	EditNumberPropertyDialog(PixInsightINDIInstance* indiInstance,const IsoString& numberFmt, double min, double max, double step);
+	virtual ~EditNumberPropertyDialog(){}
+
+	virtual void setPropertyLabelString(String label){Property_Label.SetText(label);}
+	virtual void setPropertyValueString(String value){Number_Edit.edit.SetText(value);}
+	void NumericEditCompleted( NumericEdit& sender, double value);
 };
 
 

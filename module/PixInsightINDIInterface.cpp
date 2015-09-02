@@ -609,11 +609,18 @@ void SetPropertyDialog::Cancel_Button_Click( Button& sender, bool checked ){
 		Cancel();
 }
 
-SetPropertyDialog* SetPropertyDialog::createPropertyDialog(IsoString indiType, IsoString numberFormat,PixInsightINDIInstance* indiInstance){
+SetPropertyDialog* SetPropertyDialog::createPropertyDialog(IsoString indiType, IsoString numberFormatExt,PixInsightINDIInstance* indiInstance){
 	if (indiType==IsoString("INDI_NUMBER") ){
-		size_t im = numberFormat.Find('m');
+		IsoString numberFormat;
+		double numberMin;
+		double numberMax;
+		double numberStep;
+		PropertyUtils::parseNumberFmtExt(numberFormatExt,numberFormat,numberMin,numberMax,numberStep);
+		size_t im = numberFormatExt.Find('m');
 		if (im!=IsoString::notFound){
-			return new EditNumberCoordPropertyDialog(indiInstance);
+			return new EditNumberCoordPropertyDialog(indiInstance,numberFormat,numberMin,numberMax,numberStep);
+		} else {
+			return new EditNumberPropertyDialog(indiInstance,numberFormat,numberMin,numberMax,numberStep);
 		}
 	}
 	if (indiType==IsoString("INDI_SWITCH") ){
@@ -674,34 +681,34 @@ void EditNumberCoordPropertyDialog::setPropertyValueString(String value){
 	value.Break(tokens,':',true);
 	assert(tokens.Length()==3);
 	tokens[0].TrimLeft();
-	Hour_Edit.SetText(tokens[0]);
-	Minute_Edit.SetText(tokens[1]);
-	Second_Edit.SetText(tokens[2]);
+
+	Hour_Edit.edit.SetText(tokens[0]);
+	Minute_Edit.edit.SetText(tokens[1]);
+	Second_Edit.edit.SetText(tokens[2]);
 }
 
-void EditNumberCoordPropertyDialog::EditCompleted( Edit& sender )
-{
-	if (sender==Hour_Edit){
-		m_hour=sender.Text().ToDouble();
-		m_minute=Minute_Edit.Text().ToDouble();
-		m_second=Second_Edit.Text().ToDouble();
+void EditNumberCoordPropertyDialog::NumericEditCompleted(NumericEdit& sender, double value) {
+	if (sender == Hour_Edit) {
+		m_hour = value;
+		m_minute = Minute_Edit.Value();
+		m_second = Second_Edit.Value();
 	}
-	if (sender==Minute_Edit){
-		m_hour=Hour_Edit.Text().ToDouble();
-		m_minute=sender.Text().ToDouble();
-		m_second=Second_Edit.Text().ToDouble();
+	if (sender == Minute_Edit) {
+		m_hour = Hour_Edit.Value();
+		m_minute = value;
+		m_second = Second_Edit.Value();
 	}
-	if (sender==Second_Edit){
-		m_hour=Hour_Edit.Text().ToDouble();
-		m_minute=Minute_Edit.Text().ToDouble();
-		m_second=sender.Text().ToDouble();
+	if (sender == Second_Edit) {
+		m_hour = Hour_Edit.Value();
+		m_minute = Minute_Edit.Value();
+		m_second = value;
 	}
-	double sign=m_hour >=0 ? 1.0 : -1.0;
-	double coord=sign * (fabs(m_hour) + m_minute / 60 + m_second / 3600);
-	m_newPropertyListItem.NewPropertyValue=String(coord) ;
+	double sign = m_hour >= 0 ? 1.0 : -1.0;
+	double coord = sign * (fabs(m_hour) + m_minute / 60 + m_second / 3600);
+	m_newPropertyListItem.NewPropertyValue = String(coord);
 }
 
-EditNumberCoordPropertyDialog::EditNumberCoordPropertyDialog(PixInsightINDIInstance* indiInstance):SetPropertyDialog(indiInstance),m_hour(0),m_minute(0),m_second(0){
+EditNumberCoordPropertyDialog::EditNumberCoordPropertyDialog(PixInsightINDIInstance* indiInstance, const IsoString& numberFmt, double min, double max, double step):SetPropertyDialog(indiInstance),m_hour(0),m_minute(0),m_second(0){
 	pcl::Font fnt = Font();
 	int labelWidth = fnt.Width( String( '0',20 ) );
 	int editWidth = fnt.Width( String( '0',4 ) );
@@ -712,18 +719,24 @@ EditNumberCoordPropertyDialog::EditNumberCoordPropertyDialog(PixInsightINDIInsta
 	Property_Label.SetMinWidth(labelWidth);
 	Property_Label.SetTextAlignment( TextAlign::Left|TextAlign::VertCenter );
 
-	Hour_Edit.SetMaxWidth(editWidth);
-	Hour_Edit.OnEditCompleted( (Edit::edit_event_handler)&EditNumberCoordPropertyDialog::EditCompleted, *this );
+	Hour_Edit.AdjustEditWidth();
+	Hour_Edit.SetInteger();
+	if (min!=max){
+		Hour_Edit.SetRange(min,max);
+	}
+	Hour_Edit.OnValueUpdated( (NumericEdit::value_event_handler)&EditNumberCoordPropertyDialog::NumericEditCompleted, *this );
 
-	Colon1_Label.SetText(":");
+	Minute_Edit.label.SetText(":");
+	Minute_Edit.AdjustEditWidth();
+	Minute_Edit.SetInteger();
+    Minute_Edit.SetRange(0,59);
+	Minute_Edit.OnValueUpdated( (NumericEdit::value_event_handler)&EditNumberCoordPropertyDialog::NumericEditCompleted, *this );
 
-	Minute_Edit.SetMaxWidth(editWidth);
-	Minute_Edit.OnEditCompleted( (Edit::edit_event_handler)&EditNumberCoordPropertyDialog::EditCompleted, *this );
-
-	Colon2_Label.SetText(":");
-
-	Second_Edit.SetMaxWidth(editWidth);
-	Second_Edit.OnEditCompleted( (Edit::edit_event_handler)&EditNumberCoordPropertyDialog::EditCompleted, *this );
+	Second_Edit.label.SetText(":");
+	Second_Edit.AdjustEditWidth();
+	Second_Edit.SetInteger();
+	Second_Edit.SetRange(0,59);
+	Second_Edit.OnValueUpdated( (NumericEdit::value_event_handler)&EditNumberCoordPropertyDialog::NumericEditCompleted, *this );
 
 
 	OK_PushButton.SetText("OK");
@@ -735,9 +748,7 @@ EditNumberCoordPropertyDialog::EditNumberCoordPropertyDialog(PixInsightINDIInsta
 	Property_Sizer.SetSpacing(4);
 	Property_Sizer.Add(Property_Label);
 	Property_Sizer.Add(Hour_Edit);
-	Property_Sizer.Add(Colon1_Label);
 	Property_Sizer.Add(Minute_Edit);
-	Property_Sizer.Add(Colon2_Label);
 	Property_Sizer.Add(Second_Edit);
 	Property_Sizer.AddStretch();
 
@@ -756,6 +767,68 @@ EditNumberCoordPropertyDialog::EditNumberCoordPropertyDialog(PixInsightINDIInsta
 	SetSizer(Global_Sizer);
 
 }
+
+void EditNumberPropertyDialog::NumericEditCompleted(NumericEdit& sender, double value) {
+	m_newPropertyListItem.NewPropertyValue = String(value);
+}
+
+
+EditNumberPropertyDialog::EditNumberPropertyDialog(PixInsightINDIInstance* indiInstance, const IsoString& numberFmt, double min, double max, double step):SetPropertyDialog(indiInstance){
+	pcl::Font fnt = Font();
+	int labelWidth = fnt.Width( String( '0',20 ) );
+	int editWidth = fnt.Width( String( '0',4 ) );
+
+	int significandDigits=0;
+	int precision=0;
+	PropertyUtils::parseNumberFmt(numberFmt,significandDigits,precision);
+
+	SetWindowTitle(String("INDI number property value"));
+
+	Property_Label.SetMinWidth(labelWidth);
+	Property_Label.SetTextAlignment( TextAlign::Left|TextAlign::VertCenter );
+
+	Number_Edit.AdjustEditWidth();
+	if (precision==0){
+		Number_Edit.SetInteger();
+	} else {
+		Number_Edit.SetReal();
+		Number_Edit.SetPrecision(precision);
+	}
+	if (min!=max){
+		Number_Edit.SetRange(min,max);
+	}
+	Number_Edit.OnValueUpdated( (NumericEdit::value_event_handler)&EditNumberCoordPropertyDialog::NumericEditCompleted, *this );
+
+
+
+	OK_PushButton.SetText("OK");
+	OK_PushButton.OnClick((Button::click_event_handler) &SetPropertyDialog::Ok_Button_Click, *this );
+	Cancel_PushButton.SetText("Cancel");
+	Cancel_PushButton.OnClick((Button::click_event_handler) &SetPropertyDialog::Cancel_Button_Click, *this );
+
+	Property_Sizer.SetMargin(10);
+	Property_Sizer.SetSpacing(4);
+	Property_Sizer.Add(Property_Label);
+	Property_Sizer.Add(Number_Edit);
+	Property_Sizer.AddStretch();
+
+
+	Buttons_Sizer.SetSpacing(4);
+	Buttons_Sizer.AddSpacing(10);
+	Buttons_Sizer.AddStretch();
+	Buttons_Sizer.Add(OK_PushButton);
+	Buttons_Sizer.AddStretch();
+	Buttons_Sizer.Add(Cancel_PushButton);
+	Buttons_Sizer.AddStretch();
+
+	Global_Sizer.Add(Property_Sizer);
+	Global_Sizer.Add(Buttons_Sizer);
+
+	SetSizer(Global_Sizer);
+
+}
+
+
 
 void EditSwitchPropertyDialog::setPropertyValueString(String value){
 	if (value==String("ON")){
@@ -794,12 +867,8 @@ EditSwitchPropertyDialog::EditSwitchPropertyDialog(PixInsightINDIInstance* indiI
 	ON_Label.SetText("ON");
 	OFF_Label.SetText("OFF");
 
-	//ON_RadioButton.Uncheck();
 	ON_RadioButton.OnCheck((RadioButton::check_event_handler) &EditSwitchPropertyDialog::ButtonChecked,*this);
 
-
-	//OFF_RadioButton.Check();
-	//OFF_RadioButton.Disable(true);
 	OFF_RadioButton.OnCheck((RadioButton::check_event_handler) &EditSwitchPropertyDialog::ButtonChecked,*this);
 
 	OK_PushButton.SetText("OK");
@@ -887,7 +956,7 @@ void PixInsightINDIInterface::UpdatePropertyList(){
 		} else  {
 			PropertyNode* elemNode = propTree->addElementNode(iter->Device,iter->Property,iter->Element,iter->PropertyState,iter->PropertyLabel);
 			elemNode->setNodeINDIType(iter->PropertyTypeStr);
-			elemNode->setNodeINDINumberFormat(iter->PropertyNumberFormat);
+			elemNode->setNodeINDINumberFormat(PropertyUtils::createNumberFormatExt(iter->PropertyNumberFormat,iter->numberMin,iter->numberMax,iter->numberStep));
 			if (iter->PropertyTypeStr==String("INDI_NUMBER")){
 				elemNode->setNodeINDIValue(PropertyUtils::getFormattedNumber(iter->PropertyValue,iter->PropertyNumberFormat));
 			} else {

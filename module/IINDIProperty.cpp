@@ -154,6 +154,24 @@ String NumberProperty::getNumberFormat(size_t i){
 	return String(m_property->getNumber()->np[i].format);
 }
 
+double NumberProperty::getNumberMinValue(size_t i){
+	CHECK_INDEX_THROWS(
+				((INumberVectorProperty*) m_property->getProperty())->nnp);
+	return m_property->getNumber()->np[i].min;
+}
+
+double NumberProperty::getNumberMaxValue(size_t i){
+	CHECK_INDEX_THROWS(
+				((INumberVectorProperty*) m_property->getProperty())->nnp);
+	return m_property->getNumber()->np[i].max;
+}
+
+double NumberProperty::getNumberStep(size_t i){
+	CHECK_INDEX_THROWS(
+				((INumberVectorProperty*) m_property->getProperty())->nnp);
+	return m_property->getNumber()->np[i].step;
+}
+
 String TextProperty::getElementName(size_t i) {
 	CHECK_INDEX_THROWS(
 			((ITextVectorProperty*) m_property->getProperty())->ntp);

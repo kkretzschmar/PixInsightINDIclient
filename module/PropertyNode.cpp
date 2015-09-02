@@ -6,26 +6,26 @@
 
 namespace pcl {
 
-	IsoString PropertyUtils::getDevice(IsoString keyString){
+	IsoString PropertyUtils::getDevice(const IsoString& keyString){
 		size_t startpos = keyString.Find("/");
 		size_t endpos   = keyString.Find("/",1);
 		return keyString.SubString(startpos+1,endpos-startpos-1);
 	}
 
-	IsoString PropertyUtils::getProperty(IsoString keyString){
+	IsoString PropertyUtils::getProperty(const IsoString& keyString){
 		size_t startpos = keyString.Find("/",1);
 		size_t endpos = keyString.Find("/",startpos+1);
 		return keyString.SubString(startpos+1,endpos-startpos-1);
 	}
 
-	IsoString PropertyUtils::getElement(IsoString keyString){
+	IsoString PropertyUtils::getElement(const IsoString& keyString){
 		size_t startpos1 = keyString.Find("/",1);
 		size_t startpos2 = keyString.Find("/",startpos1+1);
 		size_t endpos = keyString.Find("/",startpos2+1);
 		return keyString.SubString(startpos2+1,endpos-startpos2);
 	}
 
-	IsoString PropertyUtils::getFormattedNumber(IsoString numberStr, IsoString numberFormat){
+	IsoString PropertyUtils::getFormattedNumber(const IsoString& numberStr, IsoString numberFormat){
 		size_t im = numberFormat.Find('m');
 		if (im!=String::notFound){
 			numberFormat.DeleteRight(im);
@@ -81,6 +81,43 @@ namespace pcl {
 
 		return IsoString("");
 	}
+
+	IsoString PropertyUtils::createNumberFormatExt(const IsoString& numberFormat,double numberMinValue, double numberMaxValue,double numberStep){
+		IsoString numberFormatExt=numberFormat;
+		numberFormatExt.Append(":");
+		numberFormatExt.Append(IsoString(numberMinValue));
+		numberFormatExt.Append(".");
+		numberFormatExt.Append(IsoString(numberMaxValue));
+		numberFormatExt.Append(".");
+		numberFormatExt.Append(IsoString(numberStep));
+		return numberFormatExt;
+	}
+    void PropertyUtils::parseNumberFmtExt(const IsoString& numberFormatExt, IsoString& numberFormat, double& numberMinValue, double& numberMaxValue,double& numberStep){
+    	StringList tokens;
+    	numberFormatExt.Break(tokens,':',true);
+    	assert(tokens.Length()==2);
+    	numberFormat = tokens[0];
+    	StringList extTokens;
+    	tokens[1].Break(extTokens,'.',true);
+    	assert(extTokens.Length()==3);
+    	numberMinValue=extTokens[0].ToDouble();
+    	numberMaxValue=extTokens[1].ToDouble();
+    	numberStep=extTokens[2].ToDouble();
+    }
+
+    void PropertyUtils::parseNumberFmt(const IsoString& numberFormat,int& significandDigits, int& precision){
+    	IsoString numFmt = numberFormat;
+    	size_t im = numFmt.Find('f');
+    	if (im!=String::notFound){
+    		numFmt.DeleteRight(im);
+    		numFmt.DeleteLeft(1);
+    		StringList tokens;
+    		numFmt.Break(tokens,'.',true);
+    		assert(tokens.Length()==2);
+    		significandDigits=tokens[0].ToInt();
+    		precision=tokens[1].ToInt();
+    	}
+    }
 
 	PropertyNode::PropertyNode(TreeBox& parentTreeBox):m_keyStr(IsoString("/")) {
 			m_thisTreeBoxNode = createTreeBoxNodeForTreeBox(parentTreeBox);

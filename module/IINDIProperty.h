@@ -50,6 +50,9 @@ public:
 	virtual String getElementLabel(size_t i)  {return String("unsupported element");}
 	virtual String getElementValue(size_t i) {return String("unsupported value");}
 	virtual String getNumberFormat(size_t i) {return String("");}
+	virtual double getNumberMinValue(size_t i){return -1;}
+	virtual double getNumberMaxValue(size_t i){return -1;}
+	virtual double getNumberStep(size_t i){return -1;}
 
 	virtual void addElement(IsoString elementName, IsoString value){}
 	virtual void setDeviceName(IsoString device){}
@@ -68,6 +71,9 @@ public:
 	virtual String getElementLabel(size_t i);
 	virtual String getElementValue(size_t i);
 	virtual String getNumberFormat(size_t i);
+	virtual double getNumberMinValue(size_t i);
+	virtual double getNumberMaxValue(size_t i);
+	virtual double getNumberStep(size_t i);
 	virtual void addElement(IsoString elementName, IsoString value);
 	virtual void setDeviceName(IsoString device){strcpy(((INumberVectorProperty*) m_property->getProperty())->device,device.c_str());}
 	virtual void setName(IsoString name){strcpy(((INumberVectorProperty*) m_property->getProperty())->name,name.c_str());}

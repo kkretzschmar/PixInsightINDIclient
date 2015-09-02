@@ -39,6 +39,9 @@ struct INDIPropertyListItem {
 	unsigned int PropertyState;
 	PropertyFlagType   PropertyFlag;
 	String PropertyNumberFormat;
+	double numberMin;
+	double numberMax;
+	double numberStep;
 	String PropertyLabel;
 	String ElementLabel;
 	String PropertyKey;
