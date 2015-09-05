@@ -19,3 +19,12 @@ notifications:
       - kkretzschmar@gmail.com
     on_success: change
     on_failure: always
+deploy:
+  provider: releases
+  api_key: 8f4dbf259b89b88e3df0713b155c083bc6a1797f
+  file: 
+   - ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.so
+   - ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.dylib
+  skip_cleanup: true
+  on:
+    tags: true
