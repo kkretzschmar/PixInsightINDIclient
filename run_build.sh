@@ -44,7 +44,10 @@ cd module/$OS_PATH/g++/ && mkdir -p x64/Release && mkdir -p x64/Debug  && make -
 
 # build and run PixInsightINDIclient tests
 if [ "$TRAVIS_OS_NAME" = "linux" ]; then
- cd test && make -f makefile-x64-debug && cd ..
+ pwd
+ cd test/$OS_PATH/g++ && make -f makefile-x64-debug && cd ../../..
  # run tests
+ echo "pwd" && pwd
+ echo "PCLBINDIR64: ${PCLBINDIR64}"
  ${PCLBINDIR64}/PixInsightINDIclientTest
 fi
