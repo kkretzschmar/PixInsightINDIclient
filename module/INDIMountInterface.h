@@ -164,7 +164,7 @@ private:
 
 	IsoString m_downloadedFile;
 
-	void DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size);
+	bool DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size);
 	void Button_Click(Button& sender, bool checked);
 	void EditCompleted( Edit& sender);
 public:
@@ -297,7 +297,7 @@ public:
    void RadioButtonChecked( RadioButton& sender );
    void SkyChart_Paint( Control& sender, const Rect& updateRect );
    void UpdateDeviceList();
-   void DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size);
+   bool DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size);
 };
 
 // ----------------------------------------------------------------------------

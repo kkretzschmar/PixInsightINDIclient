@@ -444,8 +444,9 @@ void CoordSearchDialog::EditCompleted( Edit& sender ){
 	m_targetObj=sender.Text();
 }
 
-void CoordSearchDialog::DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size){
+bool CoordSearchDialog::DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size){
 	 m_downloadedFile.Append(static_cast<const char*>(buffer),size);
+	 return true;
  }
 
 void CoordSearchDialog::Button_Click(Button& sender, bool checked){
@@ -829,8 +830,9 @@ void INDIMountInterface::RadioButtonChecked( RadioButton& sender ){
 }
 
 
-void INDIMountInterface::DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size){
+bool INDIMountInterface::DownloadObjectCoordinates(NetworkTransfer &sender, const void *buffer, fsize_type size){
 	 m_downloadedFile.Append(static_cast<const char*>(buffer),size);
+	 return true;
  }
 
 void INDIMountInterface::UpdateDeviceList(){
@@ -969,6 +971,9 @@ void INDIMountInterface::ComboItemSelected(ComboBox& sender, int itemIndex) {
 			Console().WriteLn(
 					String().Format("Download failed with error '%s'",
 							IsoString(transfer.ErrorInformation()).c_str()));
+			if (transfer.WasAborted()){
+				Console().WriteLn("Download was aborted");
+			}
 		} else {
 			Console().WriteLn(
 					String().Format(
