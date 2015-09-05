@@ -4,7 +4,7 @@
 # PixInsight Makefile Generator Script v1.93
 # Copyright (C) 2009-2014 Pleiades Astrophoto
 ######################################################################
-# Automatically generated on Fri, 16 Jan 2015 22:02:06 GMT
+# Automatically generated on Sat, 05 Sep 2015 13:43:53 GMT
 # Project id ...... PixInsightINDIclient
 # Project type .... Module
 # Platform ........ Windows/vc12
@@ -232,6 +232,9 @@
     <ClCompile Include="..\..\CCDFrameInterface.cpp"/>
     <ClCompile Include="..\..\CCDFrameProcess.cpp"/>
     <ClCompile Include="..\..\IINDIProperty.cpp"/>
+    <ClCompile Include="..\..\INDIMountInstance.cpp"/>
+    <ClCompile Include="..\..\INDIMountInterface.cpp"/>
+    <ClCompile Include="..\..\INDIMountProcess.cpp"/>
     <ClCompile Include="..\..\INDIPropertyBuilder.cpp"/>
     <ClCompile Include="..\..\PixInsightINDIInstance.cpp"/>
     <ClCompile Include="..\..\PixInsightINDIInterface.cpp"/>
@@ -240,6 +243,7 @@
     <ClCompile Include="..\..\PixInsightINDIProcess.cpp"/>
     <ClCompile Include="..\..\PixInsightINDIclient.cpp"/>
     <ClCompile Include="..\..\PropertyNode.cpp"/>
+    <ClCompile Include="..\..\SkyMap.cpp"/>
     <ClCompile Include="..\..\base64.c"/>
     <ClCompile Include="..\..\basedevice.cpp"/>
     <ClCompile Include="..\..\indicom.c"/>
@@ -253,6 +257,9 @@
     <ClInclude Include="..\..\CCDFrameInterface.h"/>
     <ClInclude Include="..\..\CCDFrameProcess.h"/>
     <ClInclude Include="..\..\IINDIProperty.h"/>
+    <ClInclude Include="..\..\INDIMountInstance.h"/>
+    <ClInclude Include="..\..\INDIMountInterface.h"/>
+    <ClInclude Include="..\..\INDIMountProcess.h"/>
     <ClInclude Include="..\..\INDIPropertyBuilder.h"/>
     <ClInclude Include="..\..\IPixInsightINDIInstance.h"/>
     <ClInclude Include="..\..\PixInsightINDIInstance.h"/>
@@ -263,6 +270,7 @@
     <ClInclude Include="..\..\PixInsightINDIProcess.h"/>
     <ClInclude Include="..\..\PixInsightINDIclient.h"/>
     <ClInclude Include="..\..\PropertyNode.h"/>
+    <ClInclude Include="..\..\SkyMap.h"/>
     <ClInclude Include="..\..\base64.h"/>
     <ClInclude Include="..\..\basedevice.h"/>
     <ClInclude Include="..\..\error.h"/>
