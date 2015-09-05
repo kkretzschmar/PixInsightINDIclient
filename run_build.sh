@@ -10,8 +10,8 @@ then
  echo "done"
  
  # Build gmock and gtest
- export GTEST_DIR=gtest-1.7.0
- export GMOCK_DIR=gmock-1.7.0
+ export GTEST_DIR=$TRAVIS_BUILD_DIR/gtest-1.7.0
+ export GMOCK_DIR=$TRAVIS_BUILD_DIR/gmock-1.7.0
  export GTEST_INC=${GTEST_DIR}/include
  export GMOCK_INC=${GMOCK_DIR}/include
  export GTEST_LIB=${GTEST_DIR}/lib
