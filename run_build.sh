@@ -8,18 +8,18 @@ then
  echo "done"
  
  # Build gmock and gtest
- export GTEST_DIR=./gtest-1.7.0
- export GMOCK_DIR=./gmock-1.7.0
+ export GTEST_DIR=gtest-1.7.0
+ export GMOCK_DIR=gmock-1.7.0
  
  echo "Starting:  unzip gtest and gmock ..."
  unzip gtest-1.7.0.zip
  unzip gmock-1.7.0.zip
  echo "done"
  echo Building gtest ..."
- cd ${GTEST_DIR} && mkdir build && cd build && cmake ${GTEST_DIR} 
+ mkdir build && cd build && cmake ${GTEST_DIR} 
  echo "done"
  echo Building gmock ..."
- cd ${GMOCK_DIR} && mkdir build && cd build && cmake ${GMOCK_DIR} 
+ mkdir build && cd build && cmake ${GMOCK_DIR} 
  echo "done"
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
