@@ -16,10 +16,10 @@ then
  unzip gmock-1.7.0.zip
  echo "done"
  echo Building gtest ..."
- mkdir build && cd build && cmake ../${GTEST_DIR} && cd .. 
+ mkdir build && cd build && cmake ../${GTEST_DIR} && make && cd .. 
  echo "done"
  echo Building gmock ..."
- mkdir build && cd build && cmake ../${GMOCK_DIR} && cd ..
+ mkdir build && cd build && cmake ../${GMOCK_DIR} && make && cd ..
  echo "done"
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
