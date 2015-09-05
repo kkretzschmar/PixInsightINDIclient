@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
-echo $TRAVIS_OS_NAME
+echo "OS:         $TRAVIS_OS_NAME"
+echo "BUILD_DIR:  $TAVIS_BUILD_DIR"
+
 if [ "$TRAVIS_OS_NAME" = "linux" ]; 
 then
  export OS_PATH="linux"
