@@ -2,11 +2,14 @@
 # PixInsight Makefile Generator Script v1.93
 # Copyright (C) 2009-2014 Pleiades Astrophoto
 ######################################################################
-# Automatically generated on Sat, 10 Jan 2015 12:51:54 GMT
+# Automatically generated on Sat, 05 Sep 2015 12:10:10 GMT
 # Project id ...... PixInsightINDIclient
 # Project type .... Module
 # Platform ........ Linux/g++
 # Configuration ... Debug/x64
+# --------------------------------------------------------------------
+# Additional libraries:
+# z
 ######################################################################
 
 OBJ_DIR="$(PCLDIR)/module/linux/g++/x64/Debug"
@@ -23,10 +26,10 @@ SRC_FILES= \
 ../../CCDFrameInstance.cpp \
 ../../CCDFrameInterface.cpp \
 ../../CCDFrameProcess.cpp \
+../../IINDIProperty.cpp \
 ../../INDIMountInstance.cpp \
 ../../INDIMountInterface.cpp \
 ../../INDIMountProcess.cpp \
-../../IINDIProperty.cpp \
 ../../INDIPropertyBuilder.cpp \
 ../../PixInsightINDIInstance.cpp \
 ../../PixInsightINDIInterface.cpp \
@@ -35,12 +38,12 @@ SRC_FILES= \
 ../../PixInsightINDIProcess.cpp \
 ../../PixInsightINDIclient.cpp \
 ../../PropertyNode.cpp \
+../../SkyMap.cpp \
 ../../base64.c \
 ../../basedevice.cpp \
 ../../indicom.c \
 ../../indiproperty.cpp \
-../../lilxml.c \
-../../SkyMap.cpp
+../../lilxml.c
 
 #
 # Object files
@@ -51,10 +54,10 @@ OBJ_FILES= \
 ./x64/Debug/CCDFrameInstance.o \
 ./x64/Debug/CCDFrameInterface.o \
 ./x64/Debug/CCDFrameProcess.o \
+./x64/Debug/IINDIProperty.o \
 ./x64/Debug/INDIMountInstance.o \
 ./x64/Debug/INDIMountInterface.o \
 ./x64/Debug/INDIMountProcess.o \
-./x64/Debug/IINDIProperty.o \
 ./x64/Debug/INDIPropertyBuilder.o \
 ./x64/Debug/PixInsightINDIInstance.o \
 ./x64/Debug/PixInsightINDIInterface.o \
@@ -63,12 +66,12 @@ OBJ_FILES= \
 ./x64/Debug/PixInsightINDIProcess.o \
 ./x64/Debug/PixInsightINDIclient.o \
 ./x64/Debug/PropertyNode.o \
+./x64/Debug/SkyMap.o \
 ./x64/Debug/base64.o \
 ./x64/Debug/basedevice.o \
 ./x64/Debug/indicom.o \
 ./x64/Debug/indiproperty.o \
-./x64/Debug/lilxml.o \
-./x64/Debug/SkyMap.o
+./x64/Debug/lilxml.o
 
 #
 # Dependency files
@@ -79,10 +82,10 @@ DEP_FILES= \
 ./x64/Debug/CCDFrameInstance.d \
 ./x64/Debug/CCDFrameInterface.d \
 ./x64/Debug/CCDFrameProcess.d \
+./x64/Debug/IINDIProperty.d \
 ./x64/Debug/INDIMountInstance.d \
 ./x64/Debug/INDIMountInterface.d \
 ./x64/Debug/INDIMountProcess.d \
-./x64/Debug/IINDIProperty.d \
 ./x64/Debug/INDIPropertyBuilder.d \
 ./x64/Debug/PixInsightINDIInstance.d \
 ./x64/Debug/PixInsightINDIInterface.d \
@@ -91,12 +94,12 @@ DEP_FILES= \
 ./x64/Debug/PixInsightINDIProcess.d \
 ./x64/Debug/PixInsightINDIclient.d \
 ./x64/Debug/PropertyNode.d \
+./x64/Debug/SkyMap.d \
 ./x64/Debug/base64.d \
 ./x64/Debug/basedevice.d \
 ./x64/Debug/indicom.d \
 ./x64/Debug/indiproperty.d \
-./x64/Debug/lilxml.d \
-./x64/Debug/SkyMap.d
+./x64/Debug/lilxml.d
 
 #
 # Rules
@@ -105,7 +108,7 @@ DEP_FILES= \
 -include $(DEP_FILES)
 
 $(OBJ_DIR)/PixInsightINDIclient-pxm.so: $(OBJ_FILES)
-	g++ -m64 -fPIC -Wl,-z,noexecstack -Wl,-O1 -shared -L"$(PCLLIBDIR64)" -L"$(PCLBINDIR64)" -o $(OBJ_DIR)/PixInsightINDIclient-pxm.so $(OBJ_FILES) -lpthread -lPCL-pxi
+	g++ -m64 -fPIC -Wl,-z,noexecstack -Wl,-O1 -shared -L"$(PCLLIBDIR64)" -L"$(PCLBINDIR64)" -o $(OBJ_DIR)/PixInsightINDIclient-pxm.so $(OBJ_FILES) -lz -lpthread -lPCL-pxi
 	$(MAKE) -f ./makefile-x64-debug --no-print-directory post-build
 
 .PHONY: clean
