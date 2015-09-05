@@ -51,5 +51,6 @@ if [ "$TRAVIS_OS_NAME" = "linux" ]; then
  # run tests
  echo "pwd" && pwd
  echo "PCLBINDIR64: ${PCLBINDIR64}"
+ # run tests
  ${PCLBINDIR64}/PixInsightINDIclientTest
 fi
