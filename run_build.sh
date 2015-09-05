@@ -12,8 +12,8 @@ then
  export GMOCK_DIR=gmock-1.7.0
  export GTEST_INC=${GTEST_DIR}/include
  export GMOCK_INC=${GMOCK_DIR}/include
- export GTEST_LIB=${GTEST_LIB}/lib
- export GMOCK_LIB=${GMOCK_LIB}/lib
+ export GTEST_LIB=${GTEST_DIR}/lib
+ export GMOCK_LIB=${GMOCK_DIR}/lib
  mkdir -p ${GTEST_LIB}/x64
  mkdir -p ${GMOCK_LIB}/x64
  echo "Starting:  unzip gtest and gmock ..."
