@@ -40,7 +40,7 @@ echo $OS_PATH
 export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
 pwd
-cd module/$OS_PATH/g++/ && mkdir -p x64/Release  && make -f makefile-x64  && make -f makefile-x64-debug-static && cd ../../../
+cd module/$OS_PATH/g++/ && mkdir -p x64/Release && mkdir -p x64/Debug  && make -f makefile-x64  && make -f makefile-x64-debug-static && cd ../../../
 
 # build and run PixInsightINDIclient tests
 if [ "$TRAVIS_OS_NAME" = "linux" ]; then
