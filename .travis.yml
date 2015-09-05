@@ -7,6 +7,11 @@ os:
   - osx
 before_script:
   - wget https://pixinsight.com/download/PCL/PCL-02.00.13.0689-20141030.tar.gz
+  - sudo apt-get update
+  - sudo apt-get install libgtest-dev
+  - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
+  - sudo apt-get install libgmock-dev
+  - "cd /usr/src/gmock && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
 env:
   - PCLINCDIR=../../../PCL/include  PCLBINDIR64=../../../PCL/bin  PCLDIR=../../..
 script: 
