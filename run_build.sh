@@ -21,10 +21,10 @@ then
  unzip gmock-1.7.0.zip
  echo "done"
  echo Building gtest ..."
- mkdir build && cd build && cmake ../${GTEST_DIR} && make && cp libgtest.a ${GTEST_LIB}/x64 && cp libgtest_main.a ${GTEST_LIB}/x64 && cd .. 
+ mkdir build && cd build && cmake ../${GTEST_DIR} && make && cp libgtest.a ../${GTEST_LIB}/x64 && cp libgtest_main.a ../${GTEST_LIB}/x64 && cd .. 
  echo "done"
  echo Building gmock ..."
- mkdir build && cd build && cmake ../${GMOCK_DIR} && make && cp libgmock.a ${GMOCK_LIB}/x64 && cd ..
+ mkdir build && cd build && cmake ../${GMOCK_DIR} && make && cp libgmock.a ../${GMOCK_LIB}/x64 && cd ..
  echo "done"
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
@@ -43,7 +43,7 @@ pwd
 cd module/$OS_PATH/g++/ && mkdir -p x64/Release  && make -f makefile-x64  && make -f makefile-x64-debug-static && cd ../../../
 
 # build and run PixInsightINDIclient tests
-if [ "$TRAVIS_OS_NAME" = "linux" ]; 
+if [ "$TRAVIS_OS_NAME" = "linux" ]; then
  cd test && make -f makefile-x64-debug && cd ..
  # run tests
  ${PCLBINDIR64}/PixInsightINDIclientTest
