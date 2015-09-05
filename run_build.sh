@@ -3,7 +3,7 @@ echo $TRAVIS_OS_NAME
 if [ "$TRAVIS_OS_NAME" = "linux" ]; 
 then
  export OS_PATH="linux"
- echo "Staring: tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz ..."
+ echo "Starting: tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz ..."
  tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz
  echo "done"
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
@@ -20,3 +20,21 @@ export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
 pwd
 cd module/$OS_PATH/g++/ && mkdir -p x64/Release  && make -f makefile-x64
+
+# Build and start tests
+export GTEST_DIR=./gtest-1.7.0
+export GMOCK_DIR=./gmock-1.7.0
+
+if [ "$TRAVIS_OS_NAME" = "linux" ]; 
+then
+ echo "Starting:  unzip gtest and gmock ..."
+ unzip gtest-1.7.0.zip
+ unzip gmock-1.7.0.zip
+ echo "done"
+ echo Building gtest ..."
+ cd ${GTEST_DIR} && mkdir build && cd build && cmake ${GTEST_DIR} 
+ echo "done"
+ echo Building gmock ..."
+ cd ${GMOCK_DIR} && mkdir build && cd build && cmake ${GMOCK_DIR} 
+ echo "done"
+fi
