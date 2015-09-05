@@ -2,7 +2,7 @@
 # PixInsight Makefile Generator Script v1.93
 # Copyright (C) 2009-2014 Pleiades Astrophoto
 ######################################################################
-# Automatically generated on Fri, 16 Jan 2015 22:02:05 GMT
+# Automatically generated on Sat, 05 Sep 2015 13:42:07 GMT
 # Project id ...... PixInsightINDIclient
 # Project type .... Module
 # Platform ........ MacOSX/g++
@@ -27,6 +27,9 @@ SRC_FILES= \
 ../../CCDFrameInterface.cpp \
 ../../CCDFrameProcess.cpp \
 ../../IINDIProperty.cpp \
+../../INDIMountInstance.cpp \
+../../INDIMountInterface.cpp \
+../../INDIMountProcess.cpp \
 ../../INDIPropertyBuilder.cpp \
 ../../PixInsightINDIInstance.cpp \
 ../../PixInsightINDIInterface.cpp \
@@ -35,6 +38,7 @@ SRC_FILES= \
 ../../PixInsightINDIProcess.cpp \
 ../../PixInsightINDIclient.cpp \
 ../../PropertyNode.cpp \
+../../SkyMap.cpp \
 ../../base64.c \
 ../../basedevice.cpp \
 ../../indicom.c \
@@ -51,6 +55,9 @@ OBJ_FILES= \
 ./x64/Release/CCDFrameInterface.o \
 ./x64/Release/CCDFrameProcess.o \
 ./x64/Release/IINDIProperty.o \
+./x64/Release/INDIMountInstance.o \
+./x64/Release/INDIMountInterface.o \
+./x64/Release/INDIMountProcess.o \
 ./x64/Release/INDIPropertyBuilder.o \
 ./x64/Release/PixInsightINDIInstance.o \
 ./x64/Release/PixInsightINDIInterface.o \
@@ -59,6 +66,7 @@ OBJ_FILES= \
 ./x64/Release/PixInsightINDIProcess.o \
 ./x64/Release/PixInsightINDIclient.o \
 ./x64/Release/PropertyNode.o \
+./x64/Release/SkyMap.o \
 ./x64/Release/base64.o \
 ./x64/Release/basedevice.o \
 ./x64/Release/indicom.o \
@@ -75,6 +83,9 @@ DEP_FILES= \
 ./x64/Release/CCDFrameInterface.d \
 ./x64/Release/CCDFrameProcess.d \
 ./x64/Release/IINDIProperty.d \
+./x64/Release/INDIMountInstance.d \
+./x64/Release/INDIMountInterface.d \
+./x64/Release/INDIMountProcess.d \
 ./x64/Release/INDIPropertyBuilder.d \
 ./x64/Release/PixInsightINDIInstance.d \
 ./x64/Release/PixInsightINDIInterface.d \
@@ -83,6 +94,7 @@ DEP_FILES= \
 ./x64/Release/PixInsightINDIProcess.d \
 ./x64/Release/PixInsightINDIclient.d \
 ./x64/Release/PropertyNode.d \
+./x64/Release/SkyMap.d \
 ./x64/Release/base64.d \
 ./x64/Release/basedevice.d \
 ./x64/Release/indicom.d \
