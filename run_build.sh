@@ -22,11 +22,11 @@ then
  unzip gtest-1.7.0.zip
  unzip gmock-1.7.0.zip
  echo "done"
- echo Building gtest ..."
- mkdir build && cd build && cmake ${GTEST_DIR} && make && cp libgtest.a ${GTEST_LIB}/x64 && cp libgtest_main.a ${GTEST_LIB}/x64 && cd .. 
+ echo "Building gtest ..."
+ mkdir build_gtest && cd build_gtest && cmake ${GTEST_DIR} && make && cp libgtest.a ${GTEST_LIB}/x64 && cp libgtest_main.a ${GTEST_LIB}/x64 && cd .. 
  echo "done"
- echo Building gmock ..."
- mkdir build && cd build && cmake ${GMOCK_DIR} && make && cp libgmock.a ${GMOCK_LIB}/x64 && cd ..
+ echo "Building gmock ..."
+ mkdir build_gmock && cd build_gmock && cmake ${GMOCK_DIR} && make && cp libgmock.a ${GMOCK_LIB}/x64 && cd ..
  echo "done"
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
