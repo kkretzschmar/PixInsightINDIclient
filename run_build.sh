@@ -62,7 +62,7 @@ if [ "$TRAVIS_OS_NAME" = "linux" ]; then
 fi
 
 # package build results
-ARCHIVE_NAME=PixInsightINDI_linux_osx_x64.tar
+ARCHIVE_NAME=PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar
 
 # check if archive exits and set tar commands accordingly
 if [ -e "${ARCHIVE_NAME}" ]; then
