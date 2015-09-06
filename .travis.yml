@@ -19,7 +19,7 @@ notifications:
     - kkretzschmar@gmail.com
     on_success: change
     on_failure: always
-after_success:
+before_deploy:
   gzip PixInsightINDI_linux_osx_x64.tar
 deploy:
   provider: releases
