@@ -81,3 +81,6 @@ fi
 
 # compress archive file
 gzip ${ARCHIVE_NAME}
+
+pwd
+ls PixInsightINDI*
