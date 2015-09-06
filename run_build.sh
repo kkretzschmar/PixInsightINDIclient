@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 echo "OS:         $TRAVIS_OS_NAME"
 echo "BUILD_DIR:  $TRAVIS_BUILD_DIR"
-
+echo "CXX:        $CXX"
 if [ "$TRAVIS_OS_NAME" = "linux" ]; 
 then
+ #define OS_PATH
  export OS_PATH="linux"
  echo "Starting: tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz ..."
  tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz
@@ -31,25 +32,49 @@ then
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
 then
+ #define OS_PATH
  export OS_PATH="macosx"
  echo "Starting: gunzip PCL-02.00.13.0689-20141030.tar.gz..."
  echo "Starting: tar -xf PCL-02.00.13.0689-20141030.tar.gz..."
  gunzip PCL-02.00.13.0689-20141030.tar.gz
  tar -xf PCL-02.00.13.0689-20141030.tar
  echo "done"
+
 fi
+
 echo $OS_PATH
 export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
+
 pwd
-cd module/$OS_PATH/g++/ && mkdir -p x64/Release  && mkdir -p x64/Debug  && make -f makefile-x64  && make -f makefile-x64-debug-static && cd ../../../
+cd module/$OS_PATH/${CXX}/ && mkdir -p x64/Release  && make -f makefile-x64  && cd ${TRAVIS_BUILD_DIR}
 
 # build and run PixInsightINDIclient tests
 if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+ cd module/$OS_PATH/${CXX}/   && mkdir -p x64/Debug   && make -f makefile-x64-debug-static && cd ${TRAVIS_BUILD_DIR}
  pwd
- cd test/$OS_PATH/g++ && mkdir -p x64/Debug && mkdir -p x64/Debug/fakes && make -f makefile-x64-debug 
+ cd test/$OS_PATH/${CXX} && mkdir -p x64/Debug && mkdir -p x64/Debug/fakes && make -f makefile-x64-debug && cd ${TRAVIS_BUILD_DIR}
  # run tests
  echo "pwd" && pwd
  echo "PCLBINDIR64: ${PCLBINDIR64}"
- ${PCLBINDIR64}/PixInsightINDIclientTest
+ # run tests
+ ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclientTest
+fi
+
+# package build results
+ARCHIVE_NAME=PixInsightINDI_linux_osx_x64.tar
+
+# check if archive exits and set tar commands accordingly
+if [ -e "${ARCHIVE_NAME}" ]; then
+ TAR_CMD="-uvf"
+else
+ TAR_CMD="-cvf"
+fi
+
+if [ "$TRAVIS_OS_NAME" = "linux" ]; 
+then
+	tar ${TAR_CMD}  ${ARCHIVE_NAME} module/$OS_PATH/${CXX}/x64/Release/PixInsightINDIclient-pxm.so  
+elif [ "$TRAVIS_OS_NAME" = "osx" ];
+then
+    tar ${TAR_CMD} ${ARCHIVE_NAME}  module/$OS_PATH/${CXX}/x64/Release/PixInsightINDIclient-pxm.dylib
 fi
