@@ -30,8 +30,6 @@ then
  mkdir build_gmock && cd build_gmock && cmake ${GMOCK_DIR} && make && cp libgmock.a ${GMOCK_LIB}/x64 && cd ..
  echo "done"
  
- # some OS dependend sed extension
- SED_BACKUP=""
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
 then
  #define OS_PATH
@@ -41,27 +39,12 @@ then
  gunzip PCL-02.00.13.0689-20141030.tar.gz
  tar -xf PCL-02.00.13.0689-20141030.tar
  echo "done"
- 
- SED_BACKUP="''"
+
 fi
 
 echo $OS_PATH
 export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
-
-# create build directory for clang++ builds
-if [ "${CXX}" = "clang++" ]; then
- mkdir -p module/$OS_PATH/${CXX}/
- cp module/$OS_PATH/g++/makefile* module/$OS_PATH/${CXX}/
- # change explicit references to g++ directory
- sed -i ${SED_BACKUP} 's/g++/clang++/g' module/$OS_PATH/${CXX}/makefile-x64  && sed -i ${SED_BACKUP} 's/gcc/clang/g' module/$OS_PATH/${CXX}/makefile-x64
- sed -i ${SED_BACKUP} 's/g++/clang++/g' module/$OS_PATH/${CXX}/makefile-x64-debug-static && sed -i ${SED_BACKUP} 's/gcc/clang/g' module/$OS_PATH/${CXX}/makefile-x64-debug-static
- 
- mkdir -p test/$OS_PATH/${CXX}/
- cp test/$OS_PATH/g++/makefile* test/$OS_PATH/${CXX}/
- # change explicit references to g++ directory
- sed -i ${SED_BACKUP} 's/g++/clang++/g' test/$OS_PATH/${CXX}/makefile-x64-debug && sed -i ${SED_BACKUP} 's/gcc/clang/g' module/$OS_PATH/${CXX}/makefile-x64-debug-static-debug
-fi 
 
 pwd
 cd module/$OS_PATH/${CXX}/ && mkdir -p x64/Release  && make -f makefile-x64  && cd ${TRAVIS_BUILD_DIR}
