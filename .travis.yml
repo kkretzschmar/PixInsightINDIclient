@@ -22,7 +22,7 @@ deploy:
   provider: releases
   api_key:
     secure: TirHrJV9Vnuj6sFFc7ofv1r7SBkV2EDt2e3YeCisZkrwg1uc48RHQdaCfm3yDvj1+ZnEzveGLIbX+uhENDfjbkP1CMQpQ3DqF5ZtGMlwOAfTX636s2rmR4KblaXUamFM6ysfkQ+MnBpTgfxmBFs2gjnU6+kJY4GpUbsyLVH0614=
-  file: "${PCLBINDIR64}/PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar.gz"
+  file: "${TRAVIS_BUILD_DIR}/PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar.gz"
   on:
     repo: kkretzschmar/PixInsightINDIclient
     tags: true
