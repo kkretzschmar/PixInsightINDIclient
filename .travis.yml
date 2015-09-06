@@ -1,30 +1,31 @@
 language: cpp
-compiler: 
-  - gcc
-  - clang
-os: 
-  - linux
-  - osx
+compiler:
+- gcc
+- clang
+os:
+- linux
+- osx
 before_script:
-  - wget https://pixinsight.com/download/PCL/PCL-02.00.13.0689-20141030.tar.gz
-  - wget googletest.googlecode.com/files/gtest-1.7.0.zip
-  - wget googlemock.googlecode.com/files/gmock-1.7.0.zip
+- wget https://pixinsight.com/download/PCL/PCL-02.00.13.0689-20141030.tar.gz
+- wget googletest.googlecode.com/files/gtest-1.7.0.zip
+- wget googlemock.googlecode.com/files/gmock-1.7.0.zip
 env:
-  - PCLINCDIR=../../../PCL/include  PCLBINDIR64=../../../PCL/bin  PCLDIR=../../..
-script: 
-  - ./run_build.sh
+- PCLINCDIR=../../../PCL/include  PCLBINDIR64=../../../PCL/bin  PCLDIR=../../..
+script:
+- "./run_build.sh"
 notifications:
   email:
     recipients:
-      - kkretzschmar@gmail.com
+    - kkretzschmar@gmail.com
     on_success: change
     on_failure: always
 deploy:
   provider: releases
-  api_key: 8f4dbf259b89b88e3df0713b155c083bc6a1797f
+  api_key:
+    secure: TirHrJV9Vnuj6sFFc7ofv1r7SBkV2EDt2e3YeCisZkrwg1uc48RHQdaCfm3yDvj1+ZnEzveGLIbX+uhENDfjbkP1CMQpQ3DqF5ZtGMlwOAfTX636s2rmR4KblaXUamFM6ysfkQ+MnBpTgfxmBFs2gjnU6+kJY4GpUbsyLVH0614=
   file: 
-   - ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.so
-   - ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.dylib
-  skip_cleanup: true
+    - "${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.so"
+    - "${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.dylib"
   on:
+    repo: kkretzschmar/PixInsightINDIclient
     tags: true
