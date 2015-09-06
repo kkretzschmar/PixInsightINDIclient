@@ -43,7 +43,7 @@ then
 fi
 
 echo $OS_PATH
-export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
+export PCLLIBDIR64=${TRAVIS_BUILD_DIR}/PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
 
 pwd
@@ -58,7 +58,7 @@ if [ "$TRAVIS_OS_NAME" = "linux" ]; then
  echo "pwd" && pwd
  echo "PCLBINDIR64: ${PCLBINDIR64}"
  # run tests
- ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclientTest
+ ${PCLBINDIR64}/PixInsightINDIclientTest
 fi
 
 # package build results

@@ -9,7 +9,7 @@ before_script:
 - wget googletest.googlecode.com/files/gtest-1.7.0.zip
 - wget googlemock.googlecode.com/files/gmock-1.7.0.zip
 env:
-- PCLINCDIR=../../../PCL/include  PCLBINDIR64=../../../PCL/bin  PCLDIR=../../..
+- PCLINCDIR=${TRAVIS_BUILD_DIR}/PCL/include  PCLBINDIR64=${TRAVIS_BUILD_DIR}/PCL/bin  PCLDIR=${TRAVIS_BUILD_DIR}
 script:
 - "./run_build.sh"
 notifications:
@@ -19,12 +19,12 @@ notifications:
     on_success: change
     on_failure: always
 before_deploy:
-  gzip PixInsightINDI_linux_osx_x64.tar
+  gzip PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar
 deploy:
   provider: releases
   api_key:
     secure: TirHrJV9Vnuj6sFFc7ofv1r7SBkV2EDt2e3YeCisZkrwg1uc48RHQdaCfm3yDvj1+ZnEzveGLIbX+uhENDfjbkP1CMQpQ3DqF5ZtGMlwOAfTX636s2rmR4KblaXUamFM6ysfkQ+MnBpTgfxmBFs2gjnU6+kJY4GpUbsyLVH0614=
-  file: "${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar.gz"
+  file: "${PCLBINDIR64}/PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar.gz"
   on:
     repo: kkretzschmar/PixInsightINDIclient
     tags: true
