@@ -78,3 +78,6 @@ elif [ "$TRAVIS_OS_NAME" = "osx" ];
 then
     tar ${TAR_CMD} ${ARCHIVE_NAME}  module/$OS_PATH/${CXX}/x64/Release/PixInsightINDIclient-pxm.dylib
 fi
+
+# compress archive file
+gzip ${ARCHIVE_NAME}
