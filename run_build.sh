@@ -4,8 +4,6 @@ echo "BUILD_DIR:  $TRAVIS_BUILD_DIR"
 
 if [ "$TRAVIS_OS_NAME" = "linux" ]; 
 then
- # define shared lib extension
- export SHD_LIB=".so"
  #define OS_PATH
  export OS_PATH="linux"
  echo "Starting: tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz ..."
@@ -34,8 +32,6 @@ then
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
 then
- # define shared lib extension
- export SHD_LIB=".dylib"
  #define OS_PATH
  export OS_PATH="macosx"
  echo "Starting: gunzip PCL-02.00.13.0689-20141030.tar.gz..."
@@ -48,10 +44,11 @@ echo $OS_PATH
 export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
 pwd
-cd module/$OS_PATH/g++/ && mkdir -p x64/Release  && mkdir -p x64/Debug  && make -f makefile-x64  && make -f makefile-x64-debug-static && cd ../../../
+cd module/$OS_PATH/g++/ && mkdir -p x64/Release  && make -f makefile-x64  && cd ../../../
 
 # build and run PixInsightINDIclient tests
 if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+ cd module/$OS_PATH/g++/   && mkdir -p x64/Debug   && make -f makefile-x64-debug-static && cd ../../../
  pwd
  cd test/$OS_PATH/g++ && mkdir -p x64/Debug && mkdir -p x64/Debug/fakes && make -f makefile-x64-debug 
  # run tests
@@ -59,4 +56,13 @@ if [ "$TRAVIS_OS_NAME" = "linux" ]; then
  echo "PCLBINDIR64: ${PCLBINDIR64}"
  # run tests
  ${PCLBINDIR64}/PixInsightINDIclientTest
+fi
+
+# package build results
+if [ "$TRAVIS_OS_NAME" = "linux" ]; 
+then
+	tar -uvf PixInsightINDI_linux_osx_x64.tar module/$OS_PATH/g++/x64/Release/PixInsightINDIclient-pxm.so module/$OS_PATH/g++/x64/Debug/PixInsightINDIclient-pxm.so 
+elif [ "$TRAVIS_OS_NAME" = "osx" ];
+then
+    tar -uvf PixInsightINDI_linux_osx_x64.tar module/$OS_PATH/g++/x64/Release/PixInsightINDIclient-pxm.dylib
 fi
