@@ -39,30 +39,34 @@ then
  gunzip PCL-02.00.13.0689-20141030.tar.gz
  tar -xf PCL-02.00.13.0689-20141030.tar
  echo "done"
+ # create build directory for clang++ builds
+ if [ "${CXX}" = "clang++" ]; then
+  mkdir -p module/$OS_PATH/${CXX}/
+ fi 
 fi
 echo $OS_PATH
 export PCLLIBDIR64=../../../PCL/lib/$OS_PATH/x64
 echo $PCLLIBDIR64
 pwd
-cd module/$OS_PATH/${CXX}/ && mkdir -p x64/Release  && make -f makefile-x64  && cd ../../../
+cd module/$OS_PATH/${CXX}/ && mkdir -p x64/Release  && make -f makefile-x64  && cd ${TRAVIS_OS_NAME}
 
 # build and run PixInsightINDIclient tests
 if [ "$TRAVIS_OS_NAME" = "linux" ]; then
- cd module/$OS_PATH/${CXX}/   && mkdir -p x64/Debug   && make -f makefile-x64-debug-static && cd ../../../
+ cd module/$OS_PATH/${CXX}/   && mkdir -p x64/Debug   && make -f makefile-x64-debug-static && cd ${TRAVIS_OS_NAME}
  pwd
- cd test/$OS_PATH/${CXX} && mkdir -p x64/Debug && mkdir -p x64/Debug/fakes && make -f makefile-x64-debug && cd ../../../
+ cd test/$OS_PATH/${CXX} && mkdir -p x64/Debug && mkdir -p x64/Debug/fakes && make -f makefile-x64-debug && cd ${TRAVIS_OS_NAME}
  # run tests
  echo "pwd" && pwd
  echo "PCLBINDIR64: ${PCLBINDIR64}"
  # run tests
- ${PCLBINDIR64}/PixInsightINDIclientTest
+ ${TRAVIS_OS_NAME}/PixInsightINDIclientTest
 fi
 
 # package build results
 ARCHIVE_NAME=PixInsightINDI_linux_osx_x64.tar
 
 # check if archive exits and set tar commands accordingly
-if [ -e "${ARCHIVE_NAME}"]; then
+if [ -e "${ARCHIVE_NAME}" ]; then
  TAR_CMD="-uvf"
 else
  TAR_CMD="-cvf"
