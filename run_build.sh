@@ -4,6 +4,9 @@ echo "BUILD_DIR:  $TRAVIS_BUILD_DIR"
 
 if [ "$TRAVIS_OS_NAME" = "linux" ]; 
 then
+ # define shared lib extension
+ export SHD_LIB=".so"
+ #define OS_PATH
  export OS_PATH="linux"
  echo "Starting: tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz ..."
  tar --warning=no-unknown-keyword -xzf PCL-02.00.13.0689-20141030.tar.gz
@@ -31,6 +34,9 @@ then
  
 elif [ "$TRAVIS_OS_NAME" = "osx" ];
 then
+ # define shared lib extension
+ export SHD_LIB=".dylib"
+ #define OS_PATH
  export OS_PATH="macosx"
  echo "Starting: gunzip PCL-02.00.13.0689-20141030.tar.gz..."
  echo "Starting: tar -xf PCL-02.00.13.0689-20141030.tar.gz..."

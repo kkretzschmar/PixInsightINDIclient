@@ -23,9 +23,7 @@ deploy:
   provider: releases
   api_key:
     secure: TirHrJV9Vnuj6sFFc7ofv1r7SBkV2EDt2e3YeCisZkrwg1uc48RHQdaCfm3yDvj1+ZnEzveGLIbX+uhENDfjbkP1CMQpQ3DqF5ZtGMlwOAfTX636s2rmR4KblaXUamFM6ysfkQ+MnBpTgfxmBFs2gjnU6+kJY4GpUbsyLVH0614=
-  file: 
-    - "${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.so"
-    - "${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm.dylib"
+  file: "${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclient-pxm${SHD_LIB}"
   on:
     repo: kkretzschmar/PixInsightINDIclient
     tags: true
