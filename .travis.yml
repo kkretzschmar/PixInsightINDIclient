@@ -19,7 +19,7 @@ notifications:
     on_success: change
     on_failure: always
 before_deploy:
-  gzip PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar
+  gzip "PixInsightINDI_${TRAVIS_OS_NAME}_x64.tar"
 deploy:
   provider: releases
   api_key:
