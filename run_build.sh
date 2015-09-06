@@ -48,6 +48,14 @@ echo $PCLLIBDIR64
 if [ "${CXX}" = "clang++" ]; then
  mkdir -p module/$OS_PATH/${CXX}/
  cp module/$OS_PATH/g++/makefile* module/$OS_PATH/${CXX}/
+ # change explicit references to g++ directory
+ sed -i 's/\/g++\//\/clang++\//g' module/$OS_PATH/${CXX}/makefile-x64
+ sed -i 's/\/g++\//\/clang++\//g' module/$OS_PATH/${CXX}/makefile-x64-debug-static
+ 
+ mkdir -p test/$OS_PATH/${CXX}/
+ cp test/$OS_PATH/g++/makefile* test/$OS_PATH/${CXX}/
+ # change explicit references to g++ directory
+ sed -i 's/\/g++\//\/clang++\//g' test/$OS_PATH/${CXX}/makefile-x64-debug
 fi 
 
 pwd
@@ -62,7 +70,7 @@ if [ "$TRAVIS_OS_NAME" = "linux" ]; then
  echo "pwd" && pwd
  echo "PCLBINDIR64: ${PCLBINDIR64}"
  # run tests
- ${TRAVIS_BUILD_DIR}/PixInsightINDIclientTest
+ ${TRAVIS_BUILD_DIR}/PCL/bin/PixInsightINDIclientTest
 fi
 
 # package build results
